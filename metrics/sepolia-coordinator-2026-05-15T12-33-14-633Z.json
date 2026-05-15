@@ -1,0 +1,18 @@
+{
+  "schema": "sc6109.shape-a.coordinator-run.v1",
+  "network": "sepolia",
+  "chainId": "11155111",
+  "settlement": "0xa587ABBB1C59A20fd10B766c8FCc3768Bbf0D5D2",
+  "txHash": "0x910f000f8e1e1803d6f0f725767f74df2c3b41478cbcecc5d51891bb61458c59",
+  "blockNumber": 10857262,
+  "intentCount": 3,
+  "intentIds": [
+    "1",
+    "2",
+    "3"
+  ],
+  "gasUsed": "184973",
+  "gasPerIntent": "61657",
+  "elapsedMs": 28457,
+  "executedAt": "2026-05-15T12:33:14.632Z"
+}

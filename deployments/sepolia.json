@@ -1,0 +1,12 @@
+{
+  "AgentRegistry": "0x2ca0b63FA3d2574D916F57Be1264741a14D29192",
+  "BatchDcaSettlement": "0xa587ABBB1C59A20fd10B766c8FCc3768Bbf0D5D2",
+  "MockUSDC": "0x2A1499f86c5E1c73d5e6627daefd565006C5d70E",
+  "MockWETH": "0x366D4c45d29d443474628F48faaD15FD151689d7",
+  "chainId": 11155111,
+  "deployer": "0xd3fc26C7873c5778b98B3b906be3225fE567663b",
+  "outputLiquidity": 100000000000000000000,
+  "priceDenominator": 10000000000,
+  "priceNumerator": 5000000000000000000,
+  "schema": "sc6109.shape-a.foundry.deployment.v1"
+}

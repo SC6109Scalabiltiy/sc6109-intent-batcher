@@ -1,0 +1,29 @@
+{
+  "name": "sc6109-intent-batcher",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shape A MVP: scheduled agent intent batching for SC6109 scalability project.",
+  "scripts": {
+    "build": "forge build",
+    "compile": "forge build",
+    "test": "forge test -vv",
+    "gas": "forge test --gas-report",
+    "typecheck": "tsc --noEmit",
+    "clean": "forge clean",
+    "deploy:sepolia": "bash -lc 'set -a; [ -f ../.env.local ] && . ../.env.local; [ -f .env.local ] && . .env.local; set +a; NETWORK_NAME=sepolia forge script script/Deploy.s.sol:Deploy --rpc-url \"$SEPOLIA_RPC_URL\" --broadcast --verify --etherscan-api-key \"$ETHERSCAN_API_KEY\" -vvvv'",
+    "deploy:sepolia:no-verify": "bash -lc 'set -a; [ -f ../.env.local ] && . ../.env.local; [ -f .env.local ] && . .env.local; set +a; NETWORK_NAME=sepolia forge script script/Deploy.s.sol:Deploy --rpc-url \"$SEPOLIA_RPC_URL\" --broadcast -vvvv'",
+    "seed:sepolia": "tsx scripts/seed.ts --network sepolia",
+    "coordinator:sepolia": "tsx scripts/coordinator.ts --network sepolia",
+    "benchmark:sepolia": "tsx scripts/benchmark.ts --network sepolia"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "dotenv": "^17.4.2",
+    "tsx": "^4.22.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "ethers": "^6.16.0"
+  }
+}

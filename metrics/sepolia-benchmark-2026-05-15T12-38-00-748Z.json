@@ -1,0 +1,20 @@
+{
+  "schema": "sc6109.shape-a.benchmark.v1",
+  "network": "sepolia",
+  "chainId": "11155111",
+  "settlement": "0xa587ABBB1C59A20fd10B766c8FCc3768Bbf0D5D2",
+  "agentCount": 3,
+  "amountIn": "10000000",
+  "naiveGas": "262686",
+  "naiveGasPerIntent": "87562",
+  "batchGas": "150773",
+  "batchGasPerIntent": "50257",
+  "gasReductionPercent": 42.6,
+  "naiveTxs": [
+    "0x3b96f70fb9c3392c9328ebcb1a0d0d14752f54c44bb86efa3b5ac0646b45e916",
+    "0xd8c6a4b34f6f0b019b3815dab93b53c7384e141a53e6f9078ec1e95af3622dac",
+    "0xad2fd4f2076712aed9db9de6bccdb43cb60003fcc9bbcc459d43b89ab8d153d3"
+  ],
+  "batchTx": "0x27d7b266731898c7d144c1cc9615a03b57b098a03aa11f1dc01d66a9b48ca353",
+  "measuredAt": "2026-05-15T12:38:00.746Z"
+}

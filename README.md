@@ -1,0 +1,54 @@
+# SC6109 Intent Batcher
+
+Shape A implementation for **Intent Batcher for Scheduled Agents**.
+
+The project uses Foundry for contracts, Solidity tests, gas reporting, and Sepolia deployment. TypeScript scripts provide the off-chain coordinator, seeding, and benchmark workflow.
+
+## Components
+
+- `src/AgentRegistry.sol` registers autonomous agent identities.
+- `src/MockToken.sol` provides mock USDC/WETH test tokens.
+- `src/BatchDcaSettlement.sol` stores recurring DCA intents and executes due intents singly or in batches.
+- `script/Deploy.s.sol` deploys the protocol and writes `deployments/<network>.json`.
+- `scripts/seed.ts` registers agents and creates recurring intents.
+- `scripts/coordinator.ts` executes due intents in one batch.
+- `scripts/benchmark.ts` compares naive single execution against batch execution.
+- `test/BatchDcaSettlement.t.sol` verifies authorization, scheduling, cancellation, batch execution, and gas savings.
+
+## Commands
+
+```bash
+git submodule update --init --recursive
+npm install
+npm run compile
+npm test
+npm run typecheck
+```
+
+Sepolia:
+
+```bash
+npm run deploy:sepolia:no-verify
+npm run seed:sepolia -- --agents 3
+npm run coordinator:sepolia
+npm run benchmark:sepolia -- --agents 3
+```
+
+Use `npm run deploy:sepolia` when Etherscan verification is needed. The no-verify command is more reliable for testnet smoke runs.
+
+Useful docs:
+
+- `docs/architecture.md`
+- `docs/design-decisions.md`
+- `docs/file-map.md`
+- `docs/agent-playbook.md`
+- `docs/sepolia-runbook.md`
+- `docs/test-validation.md`
+
+## Current MVP Assumptions
+
+- Agents are simulated accounts/records, not real LLMs.
+- The deployer is the trusted coordinator by default.
+- Users approve the settlement contract to spend mock input tokens.
+- Output pricing is fixed to keep Sepolia runs reproducible without external DEX liquidity.
+- ERC-4337, real DEX routing, signed intents, and permissionless solvers are future extensions.

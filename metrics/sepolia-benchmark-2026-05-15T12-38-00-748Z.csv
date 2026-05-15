@@ -1,0 +1,2 @@
+network,agentCount,naiveGas,naiveGasPerIntent,batchGas,batchGasPerIntent,gasReductionPercent,batchTx
+sepolia,3,262686,87562,150773,50257,42.6,0x27d7b266731898c7d144c1cc9615a03b57b098a03aa11f1dc01d66a9b48ca353
