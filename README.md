@@ -25,6 +25,15 @@ npm test
 npm run typecheck
 ```
 
+Frontend/backend dashboard:
+
+```bash
+npm run dev:server   # Fastify API on http://127.0.0.1:4000
+npm run dev:web      # Next.js dashboard on http://127.0.0.1:3000
+npm run test:server
+npm run build:web
+```
+
 Sepolia:
 
 ```bash
@@ -44,6 +53,20 @@ Useful docs:
 - `docs/agent-playbook.md`
 - `docs/sepolia-runbook.md`
 - `docs/test-validation.md`
+
+## Dashboard API
+
+The frontend consumes the coordinator API instead of reading chain state directly.
+
+- `GET /api/health`
+- `GET /api/deployment?network=sepolia`
+- `GET /api/intents?network=sepolia`
+- `GET /api/batches?network=sepolia&limit=20`
+- `GET /api/metrics/latest?network=sepolia`
+- `GET /api/metrics/curve?network=sepolia`
+- `POST /api/coordinator/run`
+- `POST /api/admin/run-baseline`
+- `POST /api/admin/run-sweep`
 
 ## Current MVP Assumptions
 

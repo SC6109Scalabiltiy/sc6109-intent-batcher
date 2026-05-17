@@ -1,4 +1,7 @@
 node_modules/
+.next/
+.next-build/
+*.tsbuildinfo
 artifacts/
 broadcast/
 cache/

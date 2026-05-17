@@ -4,12 +4,27 @@
   "private": true,
   "type": "module",
   "description": "Shape A MVP: scheduled agent intent batching for SC6109 scalability project.",
+  "workspaces": [
+    "server",
+    "web"
+  ],
+  "overrides": {
+    "next": {
+      "postcss": "^8.5.10"
+    },
+    "postcss": "^8.5.10"
+  },
   "scripts": {
     "build": "forge build",
+    "build:server": "npm run build -w server",
+    "build:web": "npm run build -w web",
     "compile": "forge build",
+    "dev:server": "npm run dev -w server",
+    "dev:web": "npm run dev -w web",
     "test": "forge test -vv",
+    "test:server": "npm run test -w server",
     "gas": "forge test --gas-report",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && npm run typecheck -w server && npm run typecheck -w web",
     "clean": "forge clean",
     "deploy:sepolia": "bash -lc 'set -a; [ -f ../.env.local ] && . ../.env.local; [ -f .env.local ] && . .env.local; set +a; NETWORK_NAME=sepolia forge script script/Deploy.s.sol:Deploy --rpc-url \"$SEPOLIA_RPC_URL\" --broadcast --verify --etherscan-api-key \"$ETHERSCAN_API_KEY\" -vvvv'",
     "deploy:sepolia:no-verify": "bash -lc 'set -a; [ -f ../.env.local ] && . ../.env.local; [ -f .env.local ] && . .env.local; set +a; NETWORK_NAME=sepolia forge script script/Deploy.s.sol:Deploy --rpc-url \"$SEPOLIA_RPC_URL\" --broadcast -vvvv'",
