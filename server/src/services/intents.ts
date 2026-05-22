@@ -56,6 +56,7 @@ function toIntentDto(record: IntentRecord, due: IntentDto["due"], chainState: On
     intentId: record.intentId ?? "0",
     agentId: record.agentId,
     owner: record.owner,
+    smartWalletAddress: record.smartWalletAddress ?? null,
     amountIn: record.amountIn,
     minAmountOut: record.minAmountOut,
     nextExecution: chainState?.nextExecution ?? record.nextDueAt ?? null,

@@ -6,6 +6,7 @@ import { listIntents } from "./services/intents.js";
 import { coordinatorStats, latestBatch, latestBenchmark, listBatches, metricCurve } from "./services/metrics.js";
 import { normalizeNetwork } from "./services/network.js";
 import { runBenchmark, runBenchmarkSweep, runCoordinator } from "./services/scripts.js";
+import { getPaymasterBalance } from "./services/paymaster.js";
 import type { SummaryDto } from "./types.js";
 
 const querySchema = z.object({
@@ -108,6 +109,13 @@ export function buildServer() {
       network,
       items: metricCurve(network)
     };
+  });
+
+  app.get("/api/paymaster/balance", async (request) => {
+    const query = querySchema.parse(request.query);
+    const network = normalizeNetwork(query.network);
+    const balance = await getPaymasterBalance(network);
+    return { network, ...balance };
   });
 
   app.post("/api/coordinator/run", async (request, reply) => {

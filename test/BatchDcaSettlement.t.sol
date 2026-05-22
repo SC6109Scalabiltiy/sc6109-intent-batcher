@@ -37,6 +37,8 @@ contract BatchDcaSettlementTest is Test {
 
         uint256 amountOut = settlement.quote(10 * USDC);
 
+        // executeIntent is now restricted to the agent owner (alice), not the coordinator
+        vm.prank(alice);
         settlement.executeIntent(intentId);
 
         assertEq(usdc.balanceOf(alice), 0);
@@ -70,6 +72,7 @@ contract BatchDcaSettlementTest is Test {
     function testNotDueIntentCannotExecute() public {
         uint256 intentId = _createFundedIntent(alice, 10 * USDC, 1 hours, uint64(block.timestamp + 1 hours));
 
+        vm.prank(alice);
         vm.expectRevert("BatchDcaSettlement: not due");
         settlement.executeIntent(intentId);
     }
@@ -80,15 +83,17 @@ contract BatchDcaSettlementTest is Test {
         vm.prank(alice);
         settlement.cancelRecurringIntent(intentId);
 
+        vm.prank(alice);
         vm.expectRevert("BatchDcaSettlement: inactive intent");
         settlement.executeIntent(intentId);
     }
 
-    function testOnlyCoordinatorCanExecute() public {
+    // executeIntent is now guarded by agent ownership, not coordinator role
+    function testNonOwnerCannotCallExecuteIntent() public {
         uint256 intentId = _createFundedIntent(alice, 10 * USDC, 1 hours, uint64(block.timestamp));
 
-        vm.prank(alice);
-        vm.expectRevert("BatchDcaSettlement: not coordinator");
+        vm.prank(bob);
+        vm.expectRevert("BatchDcaSettlement: not agent owner");
         settlement.executeIntent(intentId);
     }
 
@@ -97,6 +102,7 @@ contract BatchDcaSettlementTest is Test {
 
         vm.warp(block.timestamp + 11 minutes);
 
+        vm.prank(alice);
         vm.expectRevert("BatchDcaSettlement: missed window");
         settlement.executeIntent(intentId);
     }
@@ -106,6 +112,7 @@ contract BatchDcaSettlementTest is Test {
         vm.prank(alice);
         registry.setAgentActive(1, false);
 
+        vm.prank(alice);
         vm.expectRevert("BatchDcaSettlement: inactive agent");
         settlement.executeIntent(intentId);
     }
@@ -118,6 +125,7 @@ contract BatchDcaSettlementTest is Test {
         uint256 intentId =
             settlement.createRecurringIntent(agentId, 10 * USDC, 0, 1 hours, uint64(block.timestamp), 10 minutes, 1);
 
+        vm.prank(alice);
         settlement.executeIntent(intentId);
 
         (,,,,,,,, bool active) = settlement.intents(intentId);
@@ -128,6 +136,7 @@ contract BatchDcaSettlementTest is Test {
     function testBatchExecutesDueIntents() public {
         uint256[] memory ids = _createBatch(5);
 
+        // executeBatch remains onlyCoordinator — test contract is the coordinator
         settlement.executeBatch(ids);
 
         for (uint256 i = 0; i < ids.length; i++) {
@@ -142,6 +151,8 @@ contract BatchDcaSettlementTest is Test {
 
         uint256 gasBefore = gasleft();
         for (uint256 i = 0; i < singleIds.length; i++) {
+            address owner = address(uint160(1000 + i));
+            vm.prank(owner);
             settlement.executeIntent(singleIds[i]);
         }
         uint256 singleGas = gasBefore - gasleft();

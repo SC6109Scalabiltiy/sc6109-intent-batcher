@@ -1,10 +1,22 @@
-import { Boxes, CircleDollarSign, Clock3, Gauge, Percent, RadioTower, ReceiptText, ShieldAlert } from "lucide-react";
+import { Boxes, CircleDollarSign, Clock3, Gauge, Percent, RadioTower, ReceiptText, Shield, ShieldAlert } from "lucide-react";
 import { formatDurationMs, formatInteger, formatPercent, formatRatioPercent, shortHash } from "@/lib/format";
-import type { LatestResponse } from "@/lib/types";
+import type { LatestResponse, PaymasterBalanceResponse } from "@/lib/types";
 
-export function KpiGrid({ latest }: { latest: LatestResponse | null }) {
+export function KpiGrid({
+  latest,
+  paymaster,
+}: {
+  latest: LatestResponse | null;
+  paymaster: PaymasterBalanceResponse | null;
+}) {
   const summary = latest?.summary;
   const batch = latest?.latestBatch;
+
+  const depositEth = paymaster?.depositEth ? `${paymaster.depositEth} ETH` : null;
+  const paymasterFoot =
+    paymaster?.source === "chain"
+      ? `${shortHash(paymaster.paymasterAddress)} · gas sponsored`
+      : "Connect RPC to read";
 
   const items = [
     {
@@ -62,6 +74,13 @@ export function KpiGrid({ latest }: { latest: LatestResponse | null }) {
       foot: "Most recent benchmark/coordinator tx",
       icon: CircleDollarSign,
       tone: ""
+    },
+    {
+      label: "Paymaster Deposit",
+      value: depositEth ?? "-",
+      foot: paymasterFoot,
+      icon: Shield,
+      tone: paymaster?.source === "chain" && Number(paymaster.depositEth) < 0.01 ? "danger" : "accent"
     }
   ];
 

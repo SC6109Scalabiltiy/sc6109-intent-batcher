@@ -75,3 +75,17 @@ The frontend consumes the coordinator API instead of reading chain state directl
 - Users approve the settlement contract to spend mock input tokens.
 - Output pricing is fixed to keep Sepolia runs reproducible without external DEX liquidity.
 - ERC-4337, real DEX routing, signed intents, and permissionless solvers are future extensions.
+
+## Demo steps
+
+### 1. Seed fresh smart-wallet agents
+npm run seed:sepolia -- --agents 3 --interval 60 --max-executions 1
+
+### 2. Run coordinator (executes via handleOps)
+npm run coordinator:sepolia
+
+### 3. Start the stack
+npm run dev:server
+npm run dev:web
+
+Then open http://127.0.0.1:3000 and walk through: Overview → ERC-4337 panel → Intents (smart wallets) → Run Coordinator button → Batches (click handleOps ↗ to expand UserOp hashes).

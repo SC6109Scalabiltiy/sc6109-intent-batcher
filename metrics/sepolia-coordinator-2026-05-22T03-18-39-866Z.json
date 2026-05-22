@@ -1,0 +1,25 @@
+{
+  "schema": "sc6109.shape-a.coordinator-run.v2",
+  "network": "sepolia",
+  "chainId": "11155111",
+  "entryPoint": "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789",
+  "settlement": "0xA80a3cB238Cbd346B3c44ECb8C6088AA33c471aF",
+  "paymaster": "0xA0d72Ac849787Bd3D7A383fbBBeb2A3C7587f741",
+  "txHash": "0x0ab911d2ad959496584e93455b33afbe730ff8e545309bc2089985dd0310788b",
+  "blockNumber": 10895356,
+  "intentCount": 3,
+  "intentIds": [
+    "1",
+    "2",
+    "3"
+  ],
+  "userOpHashes": [
+    "0xc6c0edde30cb58740ee92b0d08fe8161a9902d4abfd75a8eef1bd58b465479ed",
+    "0x8703411c228be677e1cd328dc6fb16db211e6d8f6ae45b9c830cf4a9ce3e452b",
+    "0x6d21f7d91d020896b84888b193f02ba78d328c457363b1a1becd829d5ea34979"
+  ],
+  "gasUsed": "389420",
+  "gasPerIntent": "129806",
+  "elapsedMs": 10529,
+  "executedAt": "2026-05-22T03:18:39.864Z"
+}

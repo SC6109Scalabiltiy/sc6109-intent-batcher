@@ -10,5 +10,6 @@
     "resolveJsonModule": true,
     "types": ["node"]
   },
-  "include": ["scripts", "lib"]
+  "include": ["scripts", "lib"],
+  "exclude": ["lib/account-abstraction", "lib/forge-std", "lib/openzeppelin-contracts"]
 }

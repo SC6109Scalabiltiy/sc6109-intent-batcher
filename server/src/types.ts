@@ -4,6 +4,7 @@ export type IntentDto = {
   intentId: string;
   agentId: string;
   owner: string;
+  smartWalletAddress: string | null;
   amountIn: string;
   minAmountOut: string;
   nextExecution: number | null;
@@ -22,6 +23,9 @@ export type BatchDto = {
   elapsedMs: number | null;
   intentIds: string[];
   executedAt: string;
+  userOpHashes: string[] | null;
+  paymasterAddress: string | null;
+  entryPoint: string | null;
 };
 
 export type CurvePointDto = {

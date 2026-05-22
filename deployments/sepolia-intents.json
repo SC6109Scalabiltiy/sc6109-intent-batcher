@@ -3,49 +3,56 @@
   "network": "sepolia",
   "chainId": "11155111",
   "deployment": "sepolia.json",
-  "createdAt": "2026-05-15T12:32:38.771Z",
-  "coordinatorTrustModel": "The settlement contract restricts execution to the coordinator; the deployer is coordinator by default.",
-  "ownerMode": "single-deployer",
+  "createdAt": "2026-05-22T03:17:53.472Z",
+  "coordinatorTrustModel": "Each agent owns a smart wallet. The coordinator builds UserOps and submits them via EntryPoint.handleOps. The VerifyingPaymaster sponsors gas.",
+  "ownerMode": "smart-wallet",
   "intents": [
     {
       "index": 0,
       "agentId": "1",
       "intentId": "1",
-      "owner": "0xd3fc26C7873c5778b98B3b906be3225fE567663b",
+      "owner": "0xe2fad4AbC8939652Ca3E330B764917cEEDA65919",
+      "ownerEoa": "0x462dFBE2bD208d1281feF155115f28597A05df26",
+      "smartWalletAddress": "0xe2fad4AbC8939652Ca3E330B764917cEEDA65919",
       "strategyId": "0xe3a35ec3f63e3e0b189ddf02a4a01265aea90aafe7881a6be1134a9ef53f7b30",
       "amountIn": "10000000",
       "minAmountOut": "0",
       "deadlineWindow": 900,
-      "intervalSeconds": 3600,
-      "nextDueAt": 1778848236
+      "intervalSeconds": 60,
+      "nextDueAt": 1779419700
     },
     {
       "index": 1,
       "agentId": "2",
       "intentId": "2",
-      "owner": "0xd3fc26C7873c5778b98B3b906be3225fE567663b",
+      "owner": "0x6FF7f86879740dE2EFcE6af2446C9380b3FC4D89",
+      "ownerEoa": "0x35B8BA50F0a8DfCB9f77C8447A58FEB4294F5AF0",
+      "smartWalletAddress": "0x6FF7f86879740dE2EFcE6af2446C9380b3FC4D89",
       "strategyId": "0xe3a35ec3f63e3e0b189ddf02a4a01265aea90aafe7881a6be1134a9ef53f7b30",
       "amountIn": "10000000",
       "minAmountOut": "0",
       "deadlineWindow": 900,
-      "intervalSeconds": 3600,
-      "nextDueAt": 1778848236
+      "intervalSeconds": 60,
+      "nextDueAt": 1779419700
     },
     {
       "index": 2,
       "agentId": "3",
       "intentId": "3",
-      "owner": "0xd3fc26C7873c5778b98B3b906be3225fE567663b",
+      "owner": "0x92cfe5699dab6C107d873Dfae6AFFe49A251E5cB",
+      "ownerEoa": "0xbfbe922e89a591700e1cC92352aFb96faA47623a",
+      "smartWalletAddress": "0x92cfe5699dab6C107d873Dfae6AFFe49A251E5cB",
       "strategyId": "0xe3a35ec3f63e3e0b189ddf02a4a01265aea90aafe7881a6be1134a9ef53f7b30",
       "amountIn": "10000000",
       "minAmountOut": "0",
       "deadlineWindow": 900,
-      "intervalSeconds": 3600,
-      "nextDueAt": 1778848236
+      "intervalSeconds": 60,
+      "nextDueAt": 1779419700
     }
   ],
   "notes": [
-    "All seeded agents are owned by the deployer for Sepolia simplicity.",
+    "Each agent has a deterministic smart wallet deployed by AgentAccountFactory.",
+    "The coordinator (deployer) signs paymaster data for each UserOp.",
     "Use --agents, --amount-usdc, --interval, --window, and --max-executions to vary the workload."
   ]
 }

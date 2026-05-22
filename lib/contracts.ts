@@ -5,7 +5,14 @@ import type { InterfaceAbi, Signer } from "ethers";
 import { codeRoot } from "./paths.js";
 import type { ScriptRuntime } from "./runtime.js";
 
-export type ContractName = "AgentRegistry" | "MockToken" | "BatchDcaSettlement";
+export type ContractName =
+  | "AgentRegistry"
+  | "MockToken"
+  | "BatchDcaSettlement"
+  | "AgentSmartWallet"
+  | "AgentAccountFactory"
+  | "VerifyingPaymaster"
+  | "EntryPoint";
 
 export type Artifact = {
   abi: InterfaceAbi;

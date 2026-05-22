@@ -184,7 +184,11 @@ contract BatchDcaSettlement {
         emit IntentCancelled(intentId);
     }
 
-    function executeIntent(uint256 intentId) external onlyCoordinator returns (uint256 amountOut) {
+    function executeIntent(uint256 intentId) external returns (uint256 amountOut) {
+        require(
+            registry.getAgentOwner(intents[intentId].agentId) == msg.sender,
+            "BatchDcaSettlement: not agent owner"
+        );
         uint256 amountIn;
         (amountIn, amountOut) = _settleIntent(intentId);
         emit BatchSettled(1, amountIn, amountOut);

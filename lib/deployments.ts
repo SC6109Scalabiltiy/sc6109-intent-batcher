@@ -20,6 +20,9 @@ export type DeploymentFile = {
   MockUSDC?: string;
   MockWETH?: string;
   BatchDcaSettlement?: string;
+  EntryPoint?: string;
+  AgentAccountFactory?: string;
+  VerifyingPaymaster?: string;
   contracts?: {
     AgentRegistry: ContractDeployment;
     MockUSDC: ContractDeployment;
@@ -39,6 +42,8 @@ export type IntentRecord = {
   agentId: string;
   intentId?: string;
   owner: string;
+  ownerEoa?: string;
+  smartWalletAddress?: string;
   strategyId: string;
   amountIn: string;
   minAmountOut: string;
@@ -75,13 +80,17 @@ export function loadDeployment(networkName: string): DeploymentFile {
   return JSON.parse(readFileSync(path, "utf8")) as DeploymentFile;
 }
 
-export function deploymentAddress(deployment: DeploymentFile, name: "AgentRegistry" | "MockUSDC" | "MockWETH" | "BatchDcaSettlement"): string {
+export function deploymentAddress(
+  deployment: DeploymentFile,
+  name: "AgentRegistry" | "MockUSDC" | "MockWETH" | "BatchDcaSettlement" | "EntryPoint" | "AgentAccountFactory" | "VerifyingPaymaster"
+): string {
   const topLevel = deployment[name];
   if (typeof topLevel === "string" && topLevel.length > 0) {
     return topLevel;
   }
 
-  const fromContracts = deployment.contracts?.[name]?.address;
+  const contracts = deployment.contracts as Record<string, ContractDeployment> | undefined;
+  const fromContracts = contracts?.[name]?.address;
   if (typeof fromContracts === "string" && fromContracts.length > 0) {
     return fromContracts;
   }

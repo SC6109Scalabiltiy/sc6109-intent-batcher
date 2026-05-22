@@ -16,6 +16,9 @@ type RawCoordinatorMetric = {
   gasPerIntent?: string;
   elapsedMs?: number;
   executedAt?: string;
+  userOpHashes?: string[];
+  paymaster?: string;
+  entryPoint?: string;
 };
 
 type RawBenchmarkMetric = {
@@ -164,7 +167,10 @@ function toBatchDto(metric: RawCoordinatorMetric, mtimeMs: number): BatchDto | n
     gasPerIntent: metric.gasPerIntent,
     elapsedMs: metric.elapsedMs ?? null,
     intentIds: metric.intentIds ?? [],
-    executedAt: metric.executedAt ?? new Date(mtimeMs).toISOString()
+    executedAt: metric.executedAt ?? new Date(mtimeMs).toISOString(),
+    userOpHashes: metric.userOpHashes ?? null,
+    paymasterAddress: metric.paymaster ?? null,
+    entryPoint: metric.entryPoint ?? null,
   };
 }
 

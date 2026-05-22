@@ -1,3 +1,5 @@
+"use client";
+
 import { formatInteger, formatTimestamp, shortHash } from "@/lib/format";
 import type { IntentDto } from "@/lib/types";
 import { EmptyState } from "./empty-state";
@@ -7,6 +9,8 @@ export function IntentTable({ items }: { items: IntentDto[] }) {
     return <EmptyState>No intents found.</EmptyState>;
   }
 
+  const hasSmartWallets = items.some((i) => i.smartWalletAddress);
+
   return (
     <div className="table-wrap">
       <table className="table">
@@ -14,7 +18,7 @@ export function IntentTable({ items }: { items: IntentDto[] }) {
           <tr>
             <th>Intent</th>
             <th>Agent</th>
-            <th>Owner</th>
+            {hasSmartWallets ? <th>Smart Wallet</th> : <th>Owner</th>}
             <th>Amount In</th>
             <th>Min Out</th>
             <th>Next Execution</th>
@@ -27,7 +31,20 @@ export function IntentTable({ items }: { items: IntentDto[] }) {
             <tr key={intent.intentId}>
               <td className="mono">#{intent.intentId}</td>
               <td className="mono">#{intent.agentId}</td>
-              <td className="mono">{shortHash(intent.owner)}</td>
+              {hasSmartWallets ? (
+                <td className="mono">
+                  {intent.smartWalletAddress ? (
+                    <span title={intent.smartWalletAddress}>
+                      <span className="badge" style={{ marginRight: 6, fontSize: "0.65rem" }}>4337</span>
+                      {shortHash(intent.smartWalletAddress)}
+                    </span>
+                  ) : (
+                    shortHash(intent.owner)
+                  )}
+                </td>
+              ) : (
+                <td className="mono">{shortHash(intent.owner)}</td>
+              )}
               <td>{formatInteger(intent.amountIn)}</td>
               <td>{formatInteger(intent.minAmountOut)}</td>
               <td>{formatTimestamp(intent.nextExecution)}</td>
@@ -45,6 +62,7 @@ export function IntentTable({ items }: { items: IntentDto[] }) {
     </div>
   );
 }
+
 function IntentStatus({ intent }: { intent: IntentDto }) {
   if (!intent.active) {
     return <span className="badge danger">Inactive</span>;
