@@ -21,10 +21,24 @@ Each agent owns an ERC-4337 smart wallet. The coordinator builds UserOperations 
 - `coordinator.ts` — finds due intents, builds one UserOp per intent, submits all via a single `handleOps` call. Saves metrics including UserOp hashes.
 - `benchmark.ts` — compares naive vs batched gas cost.
 
+### Off-chain helpers (`lib/`)
+
+- `contracts.ts`, `deployments.ts`, `env.ts`, `format.ts`, `paths.ts`, `runtime.ts` — provider/wallet setup, artifact loading, JSON IO, formatting.
+- `userop.ts` — builds, hashes, and signs ERC-4337 UserOperations; encodes paymaster data.
+
+### Dashboard API (`server/`)
+
+Fastify + TypeScript service that powers the dashboard. Exposes deployment, intent, batch, metric, and paymaster endpoints, plus admin endpoints that shell out to the coordinator and benchmark scripts. Unit tests live in `server/src/app.test.ts`.
+
+### Dashboard UI (`web/`)
+
+Next.js 15 (App Router) + React 19 + Tailwind dashboard. Pages: Overview, Intents, Batches, Benchmark. Reads from the Fastify API; renders ERC-4337 badges, paymaster KPI, and live coordinator run controls.
+
 ### Tests (`test/`)
 
 - `BatchDcaSettlement.t.sol` — auth, scheduling, cancellation, batch execution, gas comparison.
 - `AgentSmartWallet.t.sol` — factory determinism, signature validation, paymaster sponsorship, full DCA integration.
+- `server/src/app.test.ts` — Fastify route tests (run via `npm run test:server`).
 
 ## Setup
 
@@ -155,10 +169,27 @@ The dashboard shows the live deposit balance on the Overview page — it turns r
 ## Local development (no Sepolia)
 
 ```bash
+npm run compile       # Forge build (required before tsx scripts use artifacts)
 npm test              # Foundry unit tests (22 tests, no network)
 npm run gas           # Gas report
+npm run typecheck     # Root + server + web TypeScript
 npm run test:server   # Server unit tests
 npm run build:web     # Next.js production build
+```
+
+## Repository layout
+
+```
+src/            Solidity contracts (registry, settlement, smart wallet, factory, paymaster)
+test/           Foundry tests
+script/         Foundry deploy script
+scripts/        TypeScript off-chain tooling (seed, coordinator, benchmark)
+lib/            TS helpers (env, contracts, userop) + git submodules (forge-std, account-abstraction, openzeppelin-contracts)
+server/         Fastify dashboard API (workspace)
+web/            Next.js dashboard (workspace)
+deployments/    Per-network address + intent JSON
+metrics/        Coordinator and benchmark run output
+docs/           Architecture, runbook, design notes
 ```
 
 ## Design notes
